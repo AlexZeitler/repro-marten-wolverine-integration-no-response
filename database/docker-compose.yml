@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  rmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  orderdb:
+    image: library/postgres:16
+    container_name: orderdb
+    environment:
+      POSTGRES_USER: 'orders'
+      POSTGRES_PASSWORD: '123456'
+      POSTGRES_DB: 'orders'
+    ports:
+      - "5401:5432"
+    user: "1000:1000"
+    volumes:
+      - ./order-data:/var/lib/postgresql/data
+  clientdb:
+    image: library/postgres:16
+    container_name: clientdb
+    environment:
+      POSTGRES_USER: 'client'
+      POSTGRES_PASSWORD: '123456'
+      POSTGRES_DB: 'client'
+    ports:
+      - "5403:5432"
+    user: "1000:1000"
+    volumes:
+      - ./client-data:/var/lib/postgresql/data
