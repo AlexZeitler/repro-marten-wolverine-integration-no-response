@@ -5,7 +5,7 @@ Repro to investigate why adding `.IntegrateWithWolverine();` in Marten configura
 ## Scenario:
 
 - RetailClient: Console App which places new orders in Order Service via Wolverine/RabbitMQ (3.1.0/3.1.0-rc-3) by invoking `PlaceOrder` commands (`RetailClient/Worker.cs`)
-- Orders: Service, which receives the `PlaceOrder` commands, creates a pending `PurchaseOrder` (Inline SingleStreamProjection `PurchaseOrderProjection`) from it, sends the order back to the client and publishes a `OrderPlaced` event. `OrderPlaced` is consumed by the `Orders/Sagas/Order.cs` Saga and will invoke the `ReserveCredit` command - which already should matter for the issue described below.
+- Orders: Service, which receives the `PlaceOrder` commands, creates a pending `PurchaseOrder` (Inline SingleStreamProjection `PurchaseOrderProjection`) from it, sends the order back to the client and publishes a `OrderPlaced` event. `OrderPlaced` is consumed by the `Orders/Sagas/Order.cs` Saga and will invoke the `ReserveCredit` command - which already shouldn't matter for the issue described below.
 - Messages: shared message types
 
 ## Setup
